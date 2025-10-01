@@ -1,6 +1,6 @@
-# RPC Performance Testing Suite
+# ETH + SOL RPC Performance Tester 
 
-A comprehensive Python toolkit for testing and benchmarking proxy servers and RPC endpoints. This suite provides quantitative analysis of network latency and reliability for Solana and Ethereum blockchain infrastructure.
+A comprehensive Python toolkit for testing and benchmarking proxy servers on SOL and RPC endpoints on both SOL and ETH. This tool provides quantitative analysis of network latency and reliability for Solana and Ethereum blockchain infrastructure.
 
 ## Overview
 
@@ -103,16 +103,6 @@ python3 rpctestereth.py -i
 - **Statistical Analysis**: Mean response time calculation
 - **Result Ranking**: Ascending order by latency
 
-**Exact JSON-RPC Request Payload**:
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "eth_blockNumber",
-  "params": [],
-  "id": 1
-}
-```
-
 #### Proxy Format Specification
 ```
 ip:port:username:password
@@ -140,21 +130,6 @@ Example:
 3. **Performance Measurement**: Millisecond-precision response timing
 4. **Data Validation**: JSON-RPC response structure verification
 5. **Result Analysis**: Performance-based ranking with error categorization
-
-**Exact JSON-RPC Request Payload**:
-```json
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "getAccountInfo",
-  "params": [
-    "86xCnPeV69n6t3DnyGvkKobf9FdN2H9oiVDdaMpo2MMY",
-    {
-      "encoding": "base58"
-    }
-  ]
-}
-```
 
 ### Sample Response Structure
 
