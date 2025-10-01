@@ -1,106 +1,148 @@
-# RPC Proxy Tester
+# RPC Performance Testing Suite
 
-A Python tool for testing multiple proxy servers against Solana RPC endpoints to find the fastest and most reliable connection.
+A comprehensive Python toolkit for testing and benchmarking proxy servers and RPC endpoints. This suite provides quantitative analysis of network latency and reliability for Solana and Ethereum blockchain infrastructure.
 
 ## Overview
 
-This tool helps you identify the best proxy server for your Solana RPC calls by testing multiple proxies simultaneously and ranking them by response time. It's particularly useful for trading bots, DeFi applications, or any service that requires fast and reliable blockchain data access.
+This toolkit enables systematic evaluation of proxy server performance and RPC endpoint reliability through automated testing protocols. It is designed for high-frequency trading systems, DeFi applications, and blockchain analytics platforms requiring optimal network performance.
+
+## Architecture
+
+### Solana RPC Proxy Tester
+Tests multiple proxy servers against Solana RPC endpoints to identify optimal routing configurations for blockchain data access.
+
+### Ethereum RPC Endpoint Tester (Updated)
+Added comprehensive Ethereum RPC endpoint testing functionality with support for multiple concurrent tests and statistical analysis of response times.
 
 ## Features
 
-- 🚀 **Performance Testing**: Measures response times for each proxy in milliseconds
-- 🔍 **Response Validation**: Verifies that RPC responses are valid Solana data
-- 📊 **Detailed Results**: Shows successful vs failed proxies with error details
-- 🏆 **Best Proxy Identification**: Automatically identifies the fastest working proxy
-- 🛡️ **Error Handling**: Comprehensive error handling for timeouts and connection issues
-- 💬 **Interactive CLI**: User-friendly command-line interface
+**Performance Metrics**: Precise response time measurement in milliseconds with statistical aggregation
+**Response Validation**: Verification of RPC response integrity and data validity
+**Comprehensive Error Analysis**: Detailed logging of connection failures, timeouts, and protocol errors
+**Optimal Configuration Identification**: Automated ranking of endpoints by performance criteria
+**Fault Tolerance**: Robust error handling for network instabilities and service interruptions
+**Interactive Command Line Interface**: Streamlined workflow for operational deployment
 
 ## Installation
 
 ### Prerequisites
 - Python 3.7 or higher
-- pip (Python package manager)
+- Standard library modules (urllib, json, statistics)
 
 ### Setup
 
-1. **Clone or download the script**:
+1. **Repository Access**:
    ```bash
-   # Save the rpctester.py file to your desired directory
+   git clone [repository-url]
+   cd rpcTester
    ```
 
-2. **Install dependencies**:
+2. **Dependency Management**:
    ```bash
-   # Create virtual environment (recommended)
-   python3 -m venv rpc_tester_env
-   source rpc_tester_env/bin/activate
-   
-   # Install required packages
+   # Virtual environment setup (recommended)
+   python3 -m venv rpc_testing_env
+   source rpc_testing_env/bin/activate
+
+   # For Solana proxy testing only
    pip install requests
    ```
 
-   **Alternative for macOS with Homebrew**:
+   **macOS Homebrew Compatibility**:
    ```bash
-   # If you get "externally-managed-environment" error
-   python3 -m venv rpc_tester_env
-   source rpc_tester_env/bin/activate
+   # Handle externally-managed-environment restrictions
+   python3 -m venv rpc_testing_env
+   source rpc_testing_env/bin/activate
    pip install requests
    ```
 
 ## Usage
 
-### Basic Usage
+### Ethereum RPC Endpoint Testing
 
-1. **Run the script**:
+#### Interactive Mode (Default)
+```bash
+python3 rpctestereth.py
+```
+
+The system will prompt for:
+- RPC endpoints (one per line, empty line to finish)
+- Number of test iterations per endpoint
+
+#### Command Line Mode
+```bash
+python3 rpctestereth.py <endpoint1> <endpoint2> ... -n <test_count>
+```
+
+#### Example Usage
+```bash
+# Test multiple endpoints with 10 iterations each
+python3 rpctestereth.py https://mainnet.gateway.tenderly.co/api-key https://eth.llamarpc.com -n 10
+
+# Force interactive mode
+python3 rpctestereth.py -i
+```
+
+### Solana Proxy Testing
+
+1. **Initialize Testing Session**:
    ```bash
    python3 rpctester.py
    ```
 
-2. **Follow the interactive prompts**:
-   - Enter your RPC URL
-   - Enter the Solana address to test
-   - Enter proxy strings (one per line)
-   - Press Enter twice to start testing
+2. **Configuration Parameters**:
+   - RPC URL endpoint
+   - Target Solana address for testing
+   - Proxy configuration strings
+   - Execute testing protocol
 
-### Example Input
+### Configuration Specifications
 
-```
-🔧 RPC Proxy Tester
-==================================================
-Enter RPC URL: https://mainnet.helius-rpc.com/?api-key=your-api-key
-Enter Solana address to test: 86xCnPeV69n6t3DnyGvkKobf9FdN2H9oiVDdaMpo2MMY
+#### Ethereum RPC Testing
+- **Test Method**: eth_blockNumber JSON-RPC call
+- **Timeout**: 10 seconds per request
+- **Statistical Analysis**: Mean response time calculation
+- **Result Ranking**: Ascending order by latency
 
-Enter proxy strings (format: ip:port:username:password)
-Enter one proxy per line. Press Enter twice when done:
-82.23.238.143:5479:pkqlkuvb:alin4kij1661
-166.0.2.122:8083:pkqlkuvb:alin4kij1661
-82.24.251.87:7934:pkqlkuvb:alin4kij1661
-148.135.189.31:8017:pkqlkuvb:alin4kij1661
-
-```
-
-### Proxy Format
-
-Proxies should be provided in the format:
+#### Proxy Format Specification
 ```
 ip:port:username:password
 ```
 
 Example:
 ```
-192.168.1.100:8080:myuser:mypass
+192.168.1.100:8080:credentials:authentication
 ```
 
-## How It Works
+## Technical Implementation
 
-1. **RPC Call**: The tool makes a `getAccountInfo` request to the specified Solana address
-2. **Proxy Testing**: Each proxy is tested individually with the same RPC call
-3. **Performance Measurement**: Response times are measured in milliseconds
-4. **Validation**: Responses are validated to ensure they're proper Solana RPC responses
-5. **Ranking**: Results are sorted by response time (fastest first)
+### Ethereum RPC Testing Protocol
 
-### Sample RPC Response
+1. **Request Formation**: JSON-RPC 2.0 eth_blockNumber method call
+2. **Concurrent Testing**: Sequential execution across multiple endpoints
+3. **Latency Measurement**: High-precision timing using system clock
+4. **Statistical Aggregation**: Mean calculation across test iterations
+5. **Performance Ranking**: Sorting by average response time
 
-A successful response looks like:
+### Solana Proxy Testing Protocol
+
+1. **RPC Method**: getAccountInfo request to specified address
+2. **Proxy Evaluation**: Individual testing of each proxy configuration
+3. **Performance Measurement**: Millisecond-precision response timing
+4. **Data Validation**: JSON-RPC response structure verification
+5. **Result Analysis**: Performance-based ranking with error categorization
+
+### Sample Response Structure
+
+Ethereum eth_blockNumber response:
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": "0x1b4"
+}
+```
+
+Solana getAccountInfo response:
 ```json
 {
   "jsonrpc": "2.0",
@@ -122,122 +164,97 @@ A successful response looks like:
 }
 ```
 
-## Sample Output
+## Performance Analysis Output
 
 ```
-Testing 4 proxies...
---------------------------------------------------------------------------------
-Testing proxy 1/4: 82.23.238.143:5479
-  ✓ Success - Response time: 145.23ms
-Testing proxy 2/4: 166.0.2.122:8083
-  ✓ Success - Response time: 89.45ms
-Testing proxy 3/4: 82.24.251.87:7934
-  ✗ Failed - Error: Connection timeout
-Testing proxy 4/4: 148.135.189.31:8017
-  ✓ Success - Response time: 203.67ms
+Testing 3 RPC endpoint(s) with 5 tests each...
+
+Testing RPC: https://mainnet.gateway.tenderly.co/api-key
+Test 1/5: 243.78ms
+Test 2/5: 156.42ms
+Test 3/5: 189.33ms
+Test 4/5: 201.55ms
+Test 5/5: 167.89ms
+Average ping: 191.79ms
 
 ================================================================================
-RESULTS SUMMARY
+RESULTS (ranked by speed):
 ================================================================================
-
-🎉 SUCCESSFUL PROXIES (3):
-------------------------------------------------------------
-1. 166.0.2.122:8083
-   Response time: 89.45ms
-   ⭐ FASTEST PROXY
-
-2. 82.23.238.143:5479
-   Response time: 145.23ms
-
-3. 148.135.189.31:8017
-   Response time: 203.67ms
-
-❌ FAILED PROXIES (1):
-------------------------------------------------------------
-• 82.24.251.87:7934
-  Error: Connection timeout
-
-================================================================================
-🏆 BEST PROXY
-================================================================================
-IP:Port: 166.0.2.122:8083
-Full proxy string: 166.0.2.122:8083:pkqlkuvb:alin4kij1661
-Response time: 89.45ms
-================================================================================
+1. https://mainnet.gateway.tenderly.co/api-key - 191.79ms
+2. https://eth.llamarpc.com - 365.16ms
+3. https://failed-endpoint.com - FAILED
 ```
 
-## Use Cases
+## Application Domains
 
-- **Trading Bots**: Find the fastest proxy for high-frequency trading
-- **DeFi Applications**: Ensure reliable blockchain data access
-- **Portfolio Trackers**: Optimize response times for real-time balance updates
-- **NFT Tools**: Speed up metadata and ownership queries
-- **Blockchain Analytics**: Improve data collection performance
+**High-Frequency Trading**: Latency optimization for time-sensitive trading algorithms
+**DeFi Protocol Integration**: Reliable blockchain state access for smart contract interactions
+**Portfolio Management Systems**: Real-time balance and position tracking
+**Blockchain Analytics**: Optimized data collection for analytical workloads
+**Infrastructure Monitoring**: Performance benchmarking of RPC provider services
 
-## Configuration
+## Configuration Parameters
 
-### Timeout Settings
-The default timeout is 10 seconds per proxy. You can modify this in the code:
+### Timeout Configuration
+Default timeout: 10 seconds per request
 ```python
-def test_rpc_call(self, rpc_url: str, solana_address: str, proxy_config: Optional[Dict] = None, timeout: int = 10):
+timeout_duration = 10  # Configurable in source code
 ```
 
-### Custom RPC Methods
-While the tool uses `getAccountInfo` by default, you can modify the payload to test other RPC methods:
+### Custom RPC Method Testing
+Modify payload structure for alternative RPC methods:
 ```python
 payload = {
     "jsonrpc": "2.0",
     "id": 1,
-    "method": "getAccountInfo",  # Change this method
-    "params": [
-        solana_address,
-        {
-            "encoding": "base58"
-        }
-    ]
+    "method": "custom_method",
+    "params": ["parameter_list"]
 }
 ```
 
 ## Troubleshooting
 
-### Common Issues
+### Dependency Issues
 
-1. **"ModuleNotFoundError: No module named 'requests'"**
-   ```bash
-   pip install requests
-   ```
+**requests module not found**:
+```bash
+pip install requests
+```
 
-2. **"externally-managed-environment" error on macOS**
-   ```bash
-   python3 -m venv rpc_tester_env
-   source rpc_tester_env/bin/activate
-   pip install requests
-   ```
+**macOS externally-managed-environment**:
+```bash
+python3 -m venv rpc_testing_env
+source rpc_testing_env/bin/activate
+pip install requests
+```
 
-3. **Connection timeouts**
-   - Check if your proxies are valid and working
-   - Verify your internet connection
-   - Try increasing the timeout value
+### Network Connectivity
 
-4. **Invalid RPC responses**
-   - Verify your RPC URL and API key
-   - Check if the Solana address is valid
-   - Ensure the RPC endpoint supports the method being called
+**Connection timeouts**: Verify proxy validity and network connectivity
+**Authentication failures**: Confirm proxy credentials and endpoint access permissions
+**Rate limiting**: Implement request throttling for provider-imposed limits
 
-### Error Messages
+### Data Validation Errors
 
-- **"Invalid proxy format"**: Make sure your proxy follows the `ip:port:username:password` format
-- **"Connection timeout"**: The proxy didn't respond within the timeout period
-- **"HTTP 4xx/5xx errors"**: Authentication or server issues with the proxy or RPC endpoint
+**Invalid RPC responses**: Verify endpoint URL and API key configuration
+**Malformed addresses**: Confirm blockchain address format compliance
+**Protocol mismatches**: Ensure RPC method compatibility with endpoint
+
+## Error Classification
+
+- **Invalid proxy format**: Non-compliant proxy string structure
+- **Connection timeout**: Network latency exceeds threshold parameters
+- **HTTP 4xx/5xx**: Authentication or server-side processing failures
+- **JSON-RPC errors**: Protocol-level response errors
 
 ## License
 
-This project is open source and available under the MIT License.
+This project operates under the MIT License framework.
 
-## Contributing
+## Development
 
-Feel free to submit issues, feature requests, or pull requests to improve this tool.
+Contributions are evaluated based on technical merit and performance impact. Submit issues and pull requests through the standard repository workflow.
 
-## Support
+## Technical Support
 
-If you encounter any issues or have questions, please check the troubleshooting section or create an issue in the project repository.
+For implementation issues or performance optimization inquiries, reference the troubleshooting documentation or submit detailed issue reports with system configuration and error logs.
