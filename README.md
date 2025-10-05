@@ -1,6 +1,6 @@
 # ETH + SOL RPC Performance Tester 
 
-A comprehensive Python toolkit for testing and benchmarking proxy servers on SOL and RPC endpoints on both SOL and ETH. This tool provides quantitative analysis of network latency and reliability for Solana and Ethereum blockchain infrastructure.
+A comprehensive Python toolkit for testing and benchmarking proxy servers on SOL and RPC endpoints on both SOL and ETH. This tool provides quantitative analysis of network latency and reliability for Solana and Ethereum blockchain infrastructure. For a list of good RPC on ETH Mainnet py
 
 ## Overview
 
